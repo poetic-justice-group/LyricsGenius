@@ -525,11 +525,14 @@ class Genius(API, PublicAPI):
 
         artist_info = self.artist(artist_id)['artist']
         found_name = artist_info['name']
+        print(f'ARTIST NAME 1: {found_name}')
         if found_name != artist_name and allow_name_change:
             if self.verbose:
                 print("Changing artist name to '{a}'".format(
                     a=safe_unicode(found_name)))
             artist_name = found_name
+            
+        print(f'ARTIST NAME 2: {artist_name}')
 
         # Create the Artist object
         artist = Artist(self, artist_info)
