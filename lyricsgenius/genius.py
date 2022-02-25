@@ -457,6 +457,8 @@ class Genius(API, PublicAPI):
                       artist_id=None,
                       include_features=False,
                       ):
+        
+        passed_artist_name = artist_name
         """Searches for a specific artist and gets their songs.
 
         This method looks for the artist by the name or by the
@@ -532,7 +534,9 @@ class Genius(API, PublicAPI):
                     a=safe_unicode(found_name)))
             artist_name = found_name
             
-        print(f'ARTIST NAME 2: {artist_name}')
+        if artist_name != passed_artist_name:
+            return None
+        
 
         # Create the Artist object
         artist = Artist(self, artist_info)
