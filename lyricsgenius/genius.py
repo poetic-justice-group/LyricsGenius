@@ -527,7 +527,6 @@ class Genius(API, PublicAPI):
 
         artist_info = self.artist(artist_id)['artist']
         found_name = artist_info['name']
-        print(f'ARTIST NAME 1: {found_name}')
         if found_name != artist_name and allow_name_change:
             if self.verbose:
                 print("Changing artist name to '{a}'".format(
