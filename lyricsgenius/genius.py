@@ -456,6 +456,7 @@ class Genius(API, PublicAPI):
                       allow_name_change=True,
                       artist_id=None,
                       include_features=False,
+                      current_songs = []
                       ):
         
         passed_artist_name = artist_name
@@ -550,7 +551,9 @@ class Genius(API, PublicAPI):
                                               )
 
             # Loop through each song on page of search results
-            for song_info in songs_on_page['songs']:
+            songs = [song for song in songs_on_page['songs'] if song["title"] not in current_songs]
+
+            for song_info in songs:
                 # Check if song is valid (e.g. contains lyrics)
                 if self.skip_non_songs and not self._result_is_lyrics(song_info):
                     valid = False
