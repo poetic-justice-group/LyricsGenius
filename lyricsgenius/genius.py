@@ -543,6 +543,7 @@ class Genius(API, PublicAPI):
         # Download each song by artist, stored as Song objects in Artist object
         page = 1
         reached_max_songs = True if max_songs == 0 else False
+        scanned_songs = []
         while not reached_max_songs:
             songs_on_page = self.artist_songs(artist_id=artist_id,
                                               per_page=per_page,
@@ -551,9 +552,10 @@ class Genius(API, PublicAPI):
                                               )
 
             # Loop through each song on page of search results
-            songs = [song for song in songs_on_page['songs'] if song["title"] not in current_songs]
+            new_songs = [song for song in songs_on_page['songs'] if song["title"] not in current_songs]
 
-            for song_info in songs:
+            for song_info in new_songs:
+                scanned_songs.append(song_info['title'])
                 # Check if song is valid (e.g. contains lyrics)
                 if self.skip_non_songs and not self._result_is_lyrics(song_info):
                     valid = False
@@ -600,7 +602,7 @@ class Genius(API, PublicAPI):
 
         if self.verbose:
             print('Done. Found {n} songs.'.format(n=artist.num_songs))
-        return artist
+        return artist, scanned_songs
 
     def save_artists(self, artists, filename="artist_lyrics", overwrite=False,
                      ensure_ascii=True):
