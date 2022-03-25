@@ -420,7 +420,7 @@ class Genius(API, PublicAPI):
 
         if not valid:
             if self.verbose:
-                print('Specified song does not contain lyrics. Rejecting.')
+                print('A: Specified song does not contain lyrics. Rejecting.')
             return None
 
         song_id = result['id']
@@ -440,7 +440,7 @@ class Genius(API, PublicAPI):
         # Skip results when URL is a 404 or lyrics are missing
         if self.skip_non_songs and not lyrics:
             if self.verbose:
-                print('Specified song does not have a valid lyrics. '
+                print('B: Specified song does not have a valid lyrics. '
                       'Rejecting.')
             return None
 
